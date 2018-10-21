@@ -261,6 +261,9 @@ type ACMEIssuerDNS01Provider struct {
 
 	// +optional
 	RFC2136 *ACMEIssuerDNS01ProviderRFC2136 `json:"rfc2136,omitempty"`
+
+	// +optional
+	Softlayer *ACMEIssuerDNS01ProviderSoftlayer `json:"softlayer,omitempty"`
 }
 
 // CNAMEStrategy configures how the DNS01 provider should handle CNAME records
@@ -321,6 +324,13 @@ type ACMEIssuerDNS01ProviderRoute53 struct {
 	HostedZoneID string `json:"hostedZoneID,omitempty"`
 
 	Region string `json:"region"`
+}
+
+// ACMEIssuerDNS01ProviderSoftlayer is a structure containing the DNS
+// configuration for Softlayer
+type ACMEIssuerDNS01ProviderSoftlayer struct {
+	Username string            `json:"username"`
+	APIKey   SecretKeySelector `json:"apiKeySecretRef"`
 }
 
 // ACMEIssuerDNS01ProviderAzureDNS is a structure containing the

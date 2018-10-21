@@ -36,6 +36,7 @@ import (
 	"github.com/jetstack/cert-manager/pkg/issuer/acme/dns/digitalocean"
 	"github.com/jetstack/cert-manager/pkg/issuer/acme/dns/rfc2136"
 	"github.com/jetstack/cert-manager/pkg/issuer/acme/dns/route53"
+	"github.com/jetstack/cert-manager/pkg/issuer/acme/dns/softlayer"
 	"github.com/jetstack/cert-manager/pkg/issuer/acme/dns/util"
 )
 
@@ -59,6 +60,7 @@ type dnsProviderConstructors struct {
 	acmeDNS      func(host string, accountJson []byte, dns01Nameservers []string) (*acmedns.DNSProvider, error)
 	rfc2136      func(nameserver, tsigAlgorithm, tsigKeyName, tsigSecret string, dns01Nameservers []string) (*rfc2136.DNSProvider, error)
 	digitalOcean func(token string, dns01Nameservers []string) (*digitalocean.DNSProvider, error)
+	softlayer    func(username, apikey string, dns01Nameservers []string) (*softlayer.DNSProvider, error)
 }
 
 // Solver is a solver for the acme dns01 challenge.
@@ -267,6 +269,19 @@ func (s *Solver) solverForChallenge(issuer v1alpha1.GenericIssuer, ch *v1alpha1.
 		if err != nil {
 			return nil, nil, fmt.Errorf("error instantiating route53 challenge solver: %s", err)
 		}
+	case providerConfig.Softlayer != nil:
+		apiKeySecret, err := s.secretLister.Secrets(resourceNamespace).Get(providerConfig.Softlayer.APIKey.Name)
+		if err != nil {
+			return nil, nil, fmt.Errorf("error getting softlayer service account: %s", err.Error())
+		}
+
+		username := providerConfig.Softlayer.Username
+		apiKey := string(apiKeySecret.Data[providerConfig.Softlayer.APIKey.Key])
+
+		impl, err = s.dnsProviderConstructors.softlayer(username, apiKey, s.DNS01Nameservers)
+		if err != nil {
+			return nil, nil, fmt.Errorf("error instantiating softlayer challenge solver: %s", err.Error())
+		}
 	case providerConfig.AzureDNS != nil:
 		klog.V(5).Infof("Preparing to create AzureDNS Provider")
 		clientSecret, err := s.secretLister.Secrets(resourceNamespace).Get(providerConfig.AzureDNS.ClientSecret.Name)
@@ -357,6 +372,7 @@ func NewSolver(ctx *controller.Context) *Solver {
 			acmedns.NewDNSProviderHostBytes,
 			rfc2136.NewDNSProviderCredentials,
 			digitalocean.NewDNSProviderCredentials,
+			softlayer.NewDNSProviderCredentials,
 		},
 	}
 }

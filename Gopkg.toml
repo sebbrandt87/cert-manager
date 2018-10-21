@@ -100,6 +100,12 @@ required = [
   name = "github.com/Azure/go-autorest"
   revision = "ea233b6412b0421a65dc6160e16c893364664a95"
 
+# Define to have a version to be used that matches latest release of fsnotify
+[[override]]
+  name = "gopkg.in/fsnotify.v1"
+  source = "gopkg.in/fsnotify/fsnotify.v1"
+  version = "v1.4.7"
+
 [prune]
   unused-packages = true
   go-tests = true
@@ -118,3 +124,7 @@ required = [
   [[prune.project]]
     name = "k8s.io/kube-openapi"
     unused-packages = false
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/softlayer/softlayer-go"

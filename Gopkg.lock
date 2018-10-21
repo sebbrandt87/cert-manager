@@ -777,6 +777,14 @@
   revision = "e645f4e5aaa8506fc71d6edbc5c4ff02c04c46f2"
 
 [[projects]]
+  branch = "master"
+  digest = "1:4346d68f01a44929ed755ac5466befc7a0c9e4e59c68b57f0e53fb8b45c53522"
+  name = "github.com/renier/xmlrpc"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ce4a1a486c03a3c6e1816df25b8c559d1879d380"
+
+[[projects]]
   digest = "1:0e792eea6c96ec55ff302ef33886acbaa5006e900fefe82689e88d96439dcd84"
   name = "github.com/ryanuber/go-glob"
   packages = ["."]
@@ -791,6 +799,20 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "38b020c58c99152830334916f25375e6bdbf9567"
+
+[[projects]]
+  branch = "master"
+  digest = "1:8e7fb7d14d8e3a8de3c0e01391c23eead278563049c5cc157162f2eea00c3b34"
+  name = "github.com/softlayer/softlayer-go"
+  packages = [
+    "config",
+    "datatypes",
+    "services",
+    "session",
+    "sl",
+  ]
+  pruneopts = "UT"
+  revision = "a40f6fdd659fe88efd2020e932905ceb4d496db7"
 
 [[projects]]
   branch = "master"
@@ -1626,6 +1648,9 @@
     "github.com/prometheus/client_golang/prometheus",
     "github.com/prometheus/client_golang/prometheus/promhttp",
     "github.com/prometheus/client_golang/prometheus/testutil",
+    "github.com/softlayer/softlayer-go/datatypes",
+    "github.com/softlayer/softlayer-go/services",
+    "github.com/softlayer/softlayer-go/session",
     "github.com/spf13/cobra",
     "github.com/spf13/pflag",
     "github.com/stretchr/testify/assert",

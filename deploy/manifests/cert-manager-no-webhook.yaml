@@ -1283,7 +1283,7 @@ spec:
                 fieldPath: metadata.namespace
           resources:
             {}
-
+            
 
 ---
 # Source: cert-manager/templates/deployment.yaml
@@ -1332,3 +1332,5 @@ spec:
             requests:
               cpu: 10m
               memory: 32Mi
+            
+

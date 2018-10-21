@@ -249,6 +249,17 @@ func ValidateACMEIssuerDNS01Config(iss *v1alpha1.ACMEIssuerDNS01Config, fldPath 
 				}
 			}
 		}
+		if p.Softlayer != nil {
+			if numProviders > 0 {
+				el = append(el, field.Forbidden(fldPath.Child("softlayer"), "may not specify more than one provider type"))
+			} else {
+				numProviders++
+				el = append(el, ValidateSecretKeySelector(&p.Softlayer.APIKey, fldPath.Child("softlayer", "apiKeySecretRef"))...)
+				if len(p.Softlayer.Username) == 0 {
+					el = append(el, field.Required(fldPath.Child("softlayer", "username"), ""))
+				}
+			}
+		}
 		if p.Route53 != nil {
 			if numProviders > 0 {
 				el = append(el, field.Forbidden(fldPath.Child("route53"), "may not specify more than one provider type"))
