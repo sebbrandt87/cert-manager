@@ -1,11 +1,6 @@
 name: cert-manager
-<<<<<<< HEAD
 version: v0.7.0
 appVersion: v0.7.0
-=======
-version: v0.6.2
-appVersion: v0.6.0
->>>>>>> Add RBAC rules for finalizers
 description: A Helm chart for cert-manager
 home: https://github.com/jetstack/cert-manager
 keywords:
